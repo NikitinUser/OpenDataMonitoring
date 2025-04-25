@@ -1,0 +1,320 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Project",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Аутентификация пользователя",
+                "operationId": "Login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "description": "Логин или e-mail",
+                                        "type": "string",
+                                        "example": "username"
+                                    },
+                                    "password": {
+                                        "description": "Пароль",
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "success",
+                                        "message"
+                                    ],
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "default": true
+                                        },
+                                        "data": {
+                                            "required": [
+                                                "token",
+                                                "expires_at"
+                                            ],
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "51|AIq61yLOTpEtTbywZ9Ba5MKapRlgrboyj3j2RXDFdf041a06"
+                                                },
+                                                "expires_at": {
+                                                    "$ref": "#/components/schemas/typeTimestampNullable"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/errorResponseUnauthorized"
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/validationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход из системы",
+                "operationId": "Logout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "success"
+                                    ],
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "default": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/errorResponseUnauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Обновление токена",
+                "operationId": "Refresh",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "success",
+                                        "message"
+                                    ],
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "default": true
+                                        },
+                                        "data": {
+                                            "required": [
+                                                "token",
+                                                "expires_at"
+                                            ],
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "51|AIq61yLOTpEtTbywZ9Ba5MKapRlgrboyj3j2RXDFdf041a06"
+                                                },
+                                                "expires_at": {
+                                                    "$ref": "#/components/schemas/typeTimestampNullable"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/errorResponseUnauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "typeTimestampNullable": {
+                "type": "string",
+                "example": "2024-12-11T13:32:19.000000Z",
+                "nullable": true
+            },
+            "baseError": {
+                "required": [
+                    "success",
+                    "message"
+                ],
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "default": false,
+                        "example": false
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Error message"
+                    },
+                    "params": {
+                        "minProperties": 1,
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "type": "object"
+            },
+            "errorDetailsItem": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "example": "Error detailed message"
+                }
+            },
+            "errorDetails": {
+                "required": [
+                    "errors"
+                ],
+                "properties": {
+                    "errors": {
+                        "minProperties": 1,
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/errorDetailsItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorSchemas": {
+                "$ref": "#/components/schemas/errorDetailsItem"
+            },
+            "validationError": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/baseError"
+                    },
+                    {
+                        "$ref": "#/components/schemas/errorDetails"
+                    }
+                ]
+            }
+        },
+        "responses": {
+            "errorResponseUnauthorized": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/baseError"
+                        }
+                    }
+                }
+            },
+            "errorResponseBadRequest": {
+                "description": "Bad request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/baseError"
+                        }
+                    }
+                }
+            },
+            "errorResponseNotFound": {
+                "description": "Not Found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/baseError"
+                        }
+                    }
+                }
+            },
+            "errorResponseForbidden": {
+                "description": "Forbidden",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/baseError"
+                        }
+                    }
+                }
+            },
+            "errorResponseValidationError": {
+                "description": "Validation Error Response",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/validationError"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Авторизация"
+        }
+    ]
+}

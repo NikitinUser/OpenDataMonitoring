@@ -1,0 +1,117 @@
+version: '3.5'
+services:
+  service-nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+      args:
+        - UID=${UID}
+      target: base
+    restart: always
+    ports:
+      - ${NGINX_HTTP_PORT}:80
+    volumes:
+      - ./public:/var/www/html/public:ro
+    depends_on:
+      - service-php
+    networks:
+      - laravel-docker-11
+      - local
+  service-php:
+    build:
+      context: .
+      dockerfile: ./docker/service-php/Dockerfile
+      args:
+        - UID=${UID}
+      target: service-php
+    restart: always
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-docker-11
+      - local
+  php-worker:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/service-php/Dockerfile
+      target: service-php
+      args:
+        UID: ${UID}
+    command: php artisan queue:listen --queue=default --tries=1 --no-interaction --verbose
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-docker-11
+      - local
+  php-scheduler:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/service-php/Dockerfile
+      target: service-php
+      args:
+        UID: ${UID}
+    command: php artisan schedule:work --no-interaction --verbose
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-docker-11
+      - local
+  service-db:
+    build:
+      context: .
+      dockerfile: ./docker/pgsql/Dockerfile
+      args:
+          UID: ${UID}
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      TZ: "Europe/Moscow"
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - postgres-l11-volume:/var/lib/postgresql/data
+    networks:
+      - laravel-docker-11
+    healthcheck:
+      test: pg_isready -q -d ${DB_DATABASE} -U ${DB_USERNAME}
+      timeout: 5s
+  rabbit:
+    restart: always
+    image: rabbitmq:3.8.2-management
+    ports:
+      - "15674:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    healthcheck:
+      test: rabbitmq-diagnostics -q check_port_connectivity && rabbitmq-diagnostics -q node_health_check
+      timeout: 10s
+    networks:
+      - laravel-docker-11
+  redis:
+    restart: always
+    image: redis:3-alpine
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: redis-cli PING
+      timeout: 3s
+    networks:
+      - laravel-docker-11
+volumes:
+  postgres-l11-volume:
+  rabbitmq-data:
+  redis-data:
+networks:
+  laravel-docker-11:
+    name: laravel-docker-11
+    attachable: true
+  local:
+    driver: bridge
+

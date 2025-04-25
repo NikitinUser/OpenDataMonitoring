@@ -1,0 +1,47 @@
+version: '3.5'
+
+services:
+  service-php:
+    build:
+      context: .
+      dockerfile: ./docker/service-php/Dockerfile
+      args:
+        - UID=${UID}
+      target: service-php
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-docker-11
+      - local
+  service-db-test:
+    build:
+      context: .
+      dockerfile: ./docker/pgsql/Dockerfile
+      args:
+          UID: ${UID}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      TZ: "Europe/Moscow"
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - postgres-l11-volume:/var/lib/postgresql/data
+    networks:
+      - laravel-docker-11
+  redis-test:
+    image: redis:3-alpine
+    volumes:
+      - redis-data:/data
+    networks:
+      - laravel-docker-11
+volumes:
+  postgres-l11-volume:
+  redis-data:
+networks:
+  laravel-docker-11:
+    name: laravel-docker-11
+    attachable: true
+  local:
+    driver: bridge
