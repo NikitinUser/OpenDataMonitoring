@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\ApiRequestHeaders;
-use App\Http\Middleware\ApiResponseFormatter;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,8 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
-            ->appendToGroup('api', ApiRequestHeaders::class)
-            ->appendToGroup('api', ApiResponseFormatter::class);
+            ->appendToGroup('api', ApiRequestHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

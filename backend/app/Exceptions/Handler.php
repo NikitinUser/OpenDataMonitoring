@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Responses\ApiErrorResponseHandler;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -26,5 +27,15 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->expectsJson()) {
+            $apiErrorResponseHandler = app()->make(ApiErrorResponseHandler::class);
+            return $apiErrorResponseHandler->handle($request, $e);
+        }
+
+        return parent::render($request, $e);
     }
 }

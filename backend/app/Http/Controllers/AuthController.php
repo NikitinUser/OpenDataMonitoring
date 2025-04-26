@@ -105,7 +105,7 @@ class AuthController extends Controller
     {
         $this->authService->logout();
 
-        return response()->json();
+        return response()->success();
     }
 
     /**
@@ -148,7 +148,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken(string $token): JsonResponse
     {
-        return response()->json([
+        return response()->success([
             'token' => $token,
             'expires_at' => now()->addMinutes(AuthJwtGuard::getTtl()),
         ]);
