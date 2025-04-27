@@ -1,13 +1,8 @@
 # OpenDataMonitoring
 Небольшой петпроект по сбору данных из открытых апи
 
-https://openlibrary.org/developers/api
-https://dog.ceo/dog-api/
-https://github.com/lukePeavey/quotable
-https://ipapi.co/
-https://pokeapi.co/
-https://restcountries.com/
-
+https://www.meteomatics.com/en/api/getting-started/
+https://www.weatherapi.com
 
 # Для запуска бэка:
 1. cd backend

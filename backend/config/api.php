@@ -8,4 +8,15 @@ return [
             'content-type' => 'application/json'
         ],
     ],
+    'endpoints' => [
+        'meteomatics' => [
+            'host' => env('METEOMATICS_HOST'),
+            'login' => env('METEOMATICS_LOGIN'),
+            'pass' => env('METEOMATICS_PASS'),
+        ],
+        'weatherapi' => [
+            'host' => env('WEATHERAPI_HOST'),
+            'key' => env('WEATHERAPI_KEY'),
+        ],
+    ],
 ];
