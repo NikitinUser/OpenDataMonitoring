@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Http\Controllers\Responses\ApiErrorResponseHandler;
+use App\Http\Responses\ApiErrorResponseHandler;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 

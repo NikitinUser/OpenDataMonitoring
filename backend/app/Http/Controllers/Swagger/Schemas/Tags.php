@@ -8,6 +8,16 @@ namespace App\Http\Controllers\Swagger\Schemas;
  *   name="Auth",
  *   description="Авторизация"
  * )
+ *
+ * @OA\Tag(
+ *   name="Coordinate",
+ *   description="Апи географических мест"
+ * )
+ *
+ * @OA\Tag(
+ *   name="CoordinateTemperature",
+ *   description="Апи температуры в географических местах"
+ * )
  */
 class Tags
 {

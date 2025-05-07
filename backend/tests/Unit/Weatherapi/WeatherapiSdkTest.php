@@ -11,6 +11,9 @@ use Tests\TestCase;
 
 class WeatherapiSdkTest extends TestCase
 {
+    private $transformerCurrentTemperature;
+    private $sdk;
+
     protected function setUp(): void
     {
         parent::setUp();
