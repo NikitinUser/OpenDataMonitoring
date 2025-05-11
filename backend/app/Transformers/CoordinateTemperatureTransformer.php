@@ -15,13 +15,13 @@ class CoordinateTemperatureTransformer
     public function fromArray(array $item): CoordinateTemperatureItemDto
     {
         return new CoordinateTemperatureItemDto(
-            coordinate_id: $item["coordinate_id"],
-            temp_cels: $item["temp_cels"],
-            temp_datetime: $item["temp_datetime"],
-            source: $item["source"],
-            id: $item["id"] ?? null,
-            created_at: $item["created_at"] ?? null,
-            updated_at: $item["updated_at"] ?? null,
+            coordinate_id: $item['coordinate_id'],
+            temp_cels: $item['temp_cels'],
+            temp_datetime: $item['temp_datetime'],
+            source: $item['source'],
+            id: $item['id'] ?? null,
+            created_at: $item['created_at'] ?? null,
+            updated_at: $item['updated_at'] ?? null,
         );
     }
 

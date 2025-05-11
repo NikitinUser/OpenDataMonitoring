@@ -4,15 +4,12 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Validation\Rule;
 
-class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
+class DateTimeRule implements ValidationRule
 {
     public function __construct(
-        protected string $table,
-        protected string $primaryFieldType = 'integer',
-        protected string $primaryField = 'id',
-        protected bool $required = true,
+        protected string $format = 'Y-m-d H:i:s',
+        protected bool $required = false,
     ) {
     }
 
@@ -28,8 +25,7 @@ class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
     public function rules(): array
     {
         $rules = [
-            $this->primaryFieldType,
-            Rule::exists($this->table, $this->primaryField),
+            'date_format:' . $this->format,
         ];
 
         if ($this->required) {

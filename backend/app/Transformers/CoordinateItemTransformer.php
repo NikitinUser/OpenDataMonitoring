@@ -15,12 +15,12 @@ class CoordinateItemTransformer
     public function fromArray(array $item): CoordinateItemDto
     {
         return new CoordinateItemDto(
-            place_name: $item["place_name"],
-            lat: $item["lat"],
-            lon: $item["lon"],
-            id: $item["id"] ?? null,
-            created_at: $item["created_at"] ?? null,
-            updated_at: $item["updated_at"] ?? null,
+            place_name: $item['place_name'],
+            lat: $item['lat'],
+            lon: $item['lon'],
+            id: $item['id'] ?? null,
+            created_at: $item['created_at'] ?? null,
+            updated_at: $item['updated_at'] ?? null,
         );
     }
 

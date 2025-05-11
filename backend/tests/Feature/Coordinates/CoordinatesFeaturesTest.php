@@ -108,7 +108,6 @@ class CoordinatesFeaturesTest extends TestCase
         $handler = new ListCoordinate(
             ruleset: app()->make(\App\Rulesets\BasePaginationRuleset::class),
             coordinateService: app()->make(CoordinateService::class),
-            coordinateItemTransformer: app()->make(CoordinateItemTransformer::class)
         );
 
         $result = $handler->handle(['page' => 1, 'limit' => 2]);

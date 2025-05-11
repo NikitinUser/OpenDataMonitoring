@@ -31,7 +31,7 @@ class CurrentTemperatureItemTransformerTest extends TestCase
         $this->assertEquals(3.3, $dto->temperatureCells);
         $this->assertEquals(55.751244, $dto->lat);
         $this->assertEquals(37.618423, $dto->lon);
-        $this->assertEquals('2025-04-26T20:00:00Z', $dto->date);
+        $this->assertEquals('2025-04-26 20:00:00', $dto->date);
     }
 
     public function testTransformFromFailedResponseSuccess(): void

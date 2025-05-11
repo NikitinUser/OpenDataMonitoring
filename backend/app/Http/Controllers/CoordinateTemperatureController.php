@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Services\Features\ListCoordinateTemperature;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class CoordinateTemperatureController extends Controller
 {
     /**
      * @OA\Get(
-     *   path="/api/coordinate_temperature",
+     *   path="/api/coordinates_temperature",
      *   summary="Получить список погодных данных (температуры) по географическим точкам, дате и времени",
      *   operationId="GetListCoordinateTemperature",
      *   tags={"CoordinateTemperature"},
@@ -42,11 +43,13 @@ class CoordinateTemperatureController extends Controller
      * )
      *
      * @param Request $request
+     * @param ListCoordinateTemperature $featureService
      *
      * @return JsonResponse
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, ListCoordinateTemperature $featureService): JsonResponse
     {
-        return response()->success();
+        $data = $featureService->handle($request->all());
+        return response()->success($data);
     }
 }

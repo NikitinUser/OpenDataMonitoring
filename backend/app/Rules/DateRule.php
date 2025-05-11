@@ -5,11 +5,11 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class RequireStringEnglishLength implements ValidationRule
+class DateRule implements ValidationRule
 {
     public function __construct(
-        protected int $minLength,
-        protected int $maxLength,
+        protected string $format = 'Y-m-d',
+        protected bool $required = false,
     ) {
     }
 
@@ -24,12 +24,14 @@ class RequireStringEnglishLength implements ValidationRule
 
     public function rules(): array
     {
-        return [
-            'required',
-            'string',
-            'regex:/^[a-zA-Z ]+$/',
-            'min:' . $this->minLength,
-            'max:' . $this->maxLength,
+        $rules = [
+            'date_format:' . $this->format,
         ];
+
+        if ($this->required) {
+            $rules[] = 'required';
+        }
+
+        return $rules;
     }
 }

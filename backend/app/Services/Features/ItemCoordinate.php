@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Validator;
 class ItemCoordinate
 {
     public function __construct(
-        public PrimaryKeyCoordinateRuleset $ruleset,
-        public CoordinateService $coordinateService,
-        public CoordinateItemTransformer $coordinateItemTransformer,
+        private PrimaryKeyCoordinateRuleset $ruleset,
+        private CoordinateService $coordinateService,
+        private CoordinateItemTransformer $coordinateItemTransformer,
     ) {}
 
     /**

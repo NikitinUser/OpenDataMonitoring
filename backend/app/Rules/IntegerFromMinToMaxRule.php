@@ -10,6 +10,7 @@ class IntegerFromMinToMaxRule implements ValidationRule
     public function __construct(
         protected int $min,
         protected int $max,
+        protected bool $required = false,
     ) {
     }
 
@@ -24,10 +25,16 @@ class IntegerFromMinToMaxRule implements ValidationRule
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'integer',
             'min:' . $this->min,
             'max:' . $this->max,
         ];
+
+        if ($this->required) {
+            $rules[] = 'required';
+        }
+
+        return $rules;
     }
 }

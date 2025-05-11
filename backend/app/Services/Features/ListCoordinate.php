@@ -4,16 +4,14 @@ namespace App\Services\Features;
 
 use App\Rulesets\BasePaginationRuleset;
 use App\Services\CoordinateService;
-use App\Transformers\CoordinateItemTransformer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListCoordinate
 {
     public function __construct(
-        public BasePaginationRuleset $ruleset,
-        public CoordinateService $coordinateService,
-        public CoordinateItemTransformer $coordinateItemTransformer,
+        private BasePaginationRuleset $ruleset,
+        private CoordinateService $coordinateService,
     ) {}
 
     /**

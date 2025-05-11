@@ -9,7 +9,7 @@ class PrimaryKeyCoordinateRuleset
     public function getRuleset()
     {
         return [
-            'id' => (new RequireIntegerExistsPrimaryKeyRule())->rules(),
+            'id' => (new RequireIntegerExistsPrimaryKeyRule('coordinates'))->rules(),
         ];
     }
 }

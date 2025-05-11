@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Validator;
 class UpdatingCoordinate
 {
     public function __construct(
-        public CoordinateRuleset $ruleset,
-        public CoordinateService $coordinateService,
-        public CoordinateItemTransformer $coordinateItemTransformer,
+        private CoordinateRuleset $ruleset,
+        private CoordinateService $coordinateService,
+        private CoordinateItemTransformer $coordinateItemTransformer,
     ) {}
 
     /**

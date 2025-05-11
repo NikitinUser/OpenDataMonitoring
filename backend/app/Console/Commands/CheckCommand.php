@@ -27,9 +27,9 @@ class CheckCommand extends Command
      *
      * @return int
      */
-    public function handle(WeatherapiSdk $WeatherapiSdk, MeteomaticsSdk $meteomaticsSdk): int
+    public function handle(WeatherapiSdk $weatherapiSdk, MeteomaticsSdk $meteomaticsSdk): int
     {
-        $dto =  $WeatherapiSdk->getCurrentTemperature(implode(',', config('geo.moscow')));
+        $dto = $weatherapiSdk->getCurrentTemperature(implode(',', config('geo.moscow')));
 
         $dto = $meteomaticsSdk->getTemperatureByDatetime(
             implode(',', config('geo.moscow')),

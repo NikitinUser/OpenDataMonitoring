@@ -31,7 +31,7 @@ class CurrentTemperatureItemTransformerTest extends TestCase
         $this->assertEquals(4.0, $dto->temperatureCells);
         $this->assertEquals(55.752, $dto->lat);
         $this->assertEquals(37.616, $dto->lon);
-        $this->assertEquals('2025-04-26 20:15', $dto->date);
+        $this->assertEquals('2025-04-26 20:15:00', $dto->date);
         $this->assertEquals(null, $dto->message);
     }
 

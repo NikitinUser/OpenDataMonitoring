@@ -4,15 +4,13 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Validation\Rule;
 
-class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
+class StringEnglishLength implements ValidationRule
 {
     public function __construct(
-        protected string $table,
-        protected string $primaryFieldType = 'integer',
-        protected string $primaryField = 'id',
-        protected bool $required = true,
+        protected int $minLength,
+        protected int $maxLength,
+        protected bool $required = false,
     ) {
     }
 
@@ -28,8 +26,10 @@ class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
     public function rules(): array
     {
         $rules = [
-            $this->primaryFieldType,
-            Rule::exists($this->table, $this->primaryField),
+            'string',
+            'regex:/^[a-zA-Z ]+$/',
+            'min:' . $this->minLength,
+            'max:' . $this->maxLength,
         ];
 
         if ($this->required) {

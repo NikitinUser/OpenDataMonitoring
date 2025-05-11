@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Validator;
 class DeletingCoordinate
 {
     public function __construct(
-        public PrimaryKeyCoordinateRuleset $ruleset,
-        public CoordinateService $coordinateService,
+        private PrimaryKeyCoordinateRuleset $ruleset,
+        private CoordinateService $coordinateService,
     ) {}
 
     /**
