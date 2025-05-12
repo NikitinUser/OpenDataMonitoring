@@ -7,7 +7,9 @@
 
 # Для запуска бэка:
 1. cd backend
-2. sudo make up
+2. make get-env
+3. sudo make up
+4. sudo make first-run
 
 # Для запуска тестов
 1. sudo make test
