@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Throwable;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class AppValidationException extends AppException
 {
@@ -13,6 +14,6 @@ class AppValidationException extends AppException
      */
     public function __construct(string $message, Throwable $previous = null, ?array $payload = null)
     {
-        parent::__construct($message, 422, $previous, $payload);
+        parent::__construct($message, SymfonyResponse::HTTP_UNPROCESSABLE_ENTITY, $previous, $payload);
     }
 }

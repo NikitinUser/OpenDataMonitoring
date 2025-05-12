@@ -20,3 +20,23 @@ Route::group([
         Route::post('refresh', 'refresh');
     });
 });
+
+Route::group([
+    'prefix' => 'coordinates',
+    'middleware' => 'jwt.auth',
+    'controller' => \App\Http\Controllers\CoordinatesController::class,
+], function () {
+    Route::get('','index');
+    Route::get('{id}','show');
+    Route::post('', 'store');
+    Route::put('{id}', 'update');
+    Route::delete('{id}', 'delete');
+});
+
+Route::group([
+    'prefix' => 'coordinates_temperature',
+    'middleware' => 'jwt.auth',
+    'controller' => \App\Http\Controllers\CoordinateTemperatureController::class,
+], function () {
+    Route::get('','index');
+});

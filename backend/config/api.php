@@ -1,48 +1,30 @@
 <?php
 
-/**
- * Конфигурация для App\Http\Middleware\ApiResponseFormatter
- */
 return [
     'request' => [
-        'routes_exclude_json_headers' => [],
+        'route_names_exclude_json_headers' => [],
         'json_headers' => [
             'accept' => 'application/json',
             'content-type' => 'application/json'
         ],
     ],
-
-    'response' => [
-        'routes_exclude_response_formatter' => [],
-        /**
-         * Настройки блока params возвращающем параметры запроса
-         */
-        'params' => [
-            /**
-             * Разрешает добавления блока params в тело ответа
-             */
-            'enable' => true,
-
-            /**
-             * Список скрываемых параметров
-             */
-            'hidden' => [
-                'username',
-                'login',
-                'password',
-                'confirm_password',
-                'password_confirmation',
+    'endpoints' => [
+        'meteomatics' => [
+            'name' => 'meteomatics',
+            'host' => env('METEOMATICS_HOST'),
+            'login' => env('METEOMATICS_LOGIN'),
+            'pass' => env('METEOMATICS_PASS'),
+            'features' => [
+                'current_temp' => \App\Services\Features\MeteomaticsCurrentTemp::class,
             ],
         ],
-
-        /**
-         * Карта замены возвращаемых статус кодов
-         */
-        'status_code' => [
-            'map' => [
-                201 => 200,
-                202 => 200,
-            ]
-        ]
+        'weatherapi' => [
+            'name' => 'weatherapi',
+            'host' => env('WEATHERAPI_HOST'),
+            'key' => env('WEATHERAPI_KEY'),
+            'features' => [
+                'current_temp' => \App\Services\Features\WeatherapiCurrentTemp::class,
+            ],
+        ],
     ],
 ];

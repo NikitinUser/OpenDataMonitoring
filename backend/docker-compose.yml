@@ -73,7 +73,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
     volumes:
-      - postgres-l11-volume:/var/lib/postgresql/data
+      - postgres-opendata-volume:/var/lib/postgresql/data
     networks:
       - laravel-docker-11
     healthcheck:
@@ -105,7 +105,7 @@ services:
     networks:
       - laravel-docker-11
 volumes:
-  postgres-l11-volume:
+  postgres-opendata-volume:
   rabbitmq-data:
   redis-data:
 networks:

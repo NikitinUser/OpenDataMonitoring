@@ -2,15 +2,13 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Support\Facades\Artisan;
+use Tests\Feature\AuthTrait;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    private const LOGIN = 'featuretest';
-    private const PASS = 'featuretest';
+    use AuthTrait;
 
     /**
      * @return void
@@ -132,33 +130,5 @@ class AuthTest extends TestCase
         }
 
         DB::rollBack();
-    }
-
-    /**
-     * @return void
-     */
-    private function createUser(): void
-    {
-        Artisan::call('auth:create-user', [
-            'email' => self::LOGIN,
-            'password' => self::PASS,
-        ]);
-    }
-
-    /**
-     * @param string $login
-     * @param string $pass
-     *
-     * @return TestResponse
-     */
-    private function sendLogin(string $login, string $pass): TestResponse
-    {
-        $this->createUser();
-
-        return $this
-            ->postJson('/api/auth/login', [
-                'username' => $login,
-                'password' => $pass,
-            ]);
     }
 }

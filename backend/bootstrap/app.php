@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\ApiRequestHeaders;
-use App\Http\Middleware\ApiResponseFormatter;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,11 +11,15 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
+        then: function () {
+            Route::prefix('swagger')
+                ->name('swagger.')
+                ->group(base_path('routes/swagger.php'));
+        },
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
-            ->appendToGroup('api', ApiRequestHeaders::class)
-            ->appendToGroup('api', ApiResponseFormatter::class);
+            ->appendToGroup('api', ApiRequestHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

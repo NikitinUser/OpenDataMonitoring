@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Throwable;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
  * Base app exception with text error code and additional data payload
@@ -22,7 +23,7 @@ class AppException extends AbstractAppException
      * @param Throwable|null $previous
      * @param array<string,mixed>|list<mixed>|null $payload
      */
-    public function __construct(string $message, int $status = 400, ?Throwable $previous = null, ?array $payload = null)
+    public function __construct(string $message, int $status = SymfonyResponse::HTTP_BAD_REQUEST, ?Throwable $previous = null, ?array $payload = null)
     {
         $this->payload = $payload;
         if (is_array($payload)) {
