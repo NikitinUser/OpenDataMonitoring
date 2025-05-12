@@ -7,7 +7,7 @@ namespace App\Dto;
  *  schema="CoordinateTemperatureItem",
  *  type="object",
  *  required={"coordinate_id","temp_cels","temp_datetime","source","id","created_at","updated_at"},
- *  @OA\Property(property="coordinate_id", type="integr"),
+ *  @OA\Property(property="coordinate_id", type="integer"),
  *  @OA\Property(property="temp_cels", type="number", format="float"),
  *  @OA\Property(property="temp_datetime", type="string", format="Y-m-d H:i:s"),
  * @OA\Property(property="source", type="string"),
