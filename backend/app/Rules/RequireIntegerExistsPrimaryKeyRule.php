@@ -2,11 +2,10 @@
 
 namespace App\Rules;
 
-use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\Rules\BaseRule;
 use Illuminate\Validation\Rule;
 
-class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
+class RequireIntegerExistsPrimaryKeyRule extends BaseRule
 {
     public function __construct(
         protected string $table,
@@ -16,15 +15,6 @@ class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
     ) {
     }
 
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
-    }
-
     public function rules(): array
     {
         $rules = [
@@ -32,10 +22,6 @@ class RequireIntegerExistsPrimaryKeyRule implements ValidationRule
             Rule::exists($this->table, $this->primaryField),
         ];
 
-        if ($this->required) {
-            $rules[] = 'required';
-        }
-
-        return $rules;
+        return $this->requred($rules, $this->required);
     }
 }

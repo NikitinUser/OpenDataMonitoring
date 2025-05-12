@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Jobs\CurrentWeatherJob;
+use App\Models\Coordinate;
+use App\Transformers\CoordinateItemTransformer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -19,16 +22,14 @@ class CurrentWeatherListCoordinateJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(CoordinateItemTransformer $transformer): void
     {
-        $transformer = app()->make(\App\Transformers\CoordinateItemTransformer::class);
-
         $services = [];
         foreach (config('api.endpoints') as $endpoint) {
             $services[] = app()->make($endpoint['features']['current_temp']);
         }
 
-        foreach (\App\Models\Coordinate::cursor() as $model) {
+        foreach (Coordinate::cursor() as $model) {
             $dto = $transformer->fromModel($model);
 
             foreach ($services as $featureService) {

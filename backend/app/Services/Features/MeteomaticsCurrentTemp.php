@@ -5,13 +5,14 @@ namespace App\Services\Features;
 use App\Dto\CoordinateItemDto;
 use App\Dto\CoordinateTemperatureItemDto;
 use App\Rulesets\CoordinateRuleset;
+use App\Services\Features\Interfaces\CurrentTempInterface;
 use App\Services\Features\NewCoordinateTemperature;
 use App\Sdk\Meteomatics\MeteomaticsSdk;
 use App\Transformers\WeatherSdkResponseTransformer;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
-class MeteomaticsCurrentTemp
+class MeteomaticsCurrentTemp implements CurrentTempInterface
 {
     public function __construct(
         private CoordinateRuleset $ruleset,

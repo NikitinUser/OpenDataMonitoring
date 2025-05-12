@@ -2,25 +2,15 @@
 
 namespace App\Rules;
 
-use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\Rules\BaseRule;
 
-class StringEnglishLength implements ValidationRule
+class StringEnglishLength extends BaseRule
 {
     public function __construct(
         protected int $minLength,
         protected int $maxLength,
         protected bool $required = false,
     ) {
-    }
-
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
     }
 
     public function rules(): array
@@ -32,10 +22,6 @@ class StringEnglishLength implements ValidationRule
             'max:' . $this->maxLength,
         ];
 
-        if ($this->required) {
-            $rules[] = 'required';
-        }
-
-        return $rules;
+        return $this->requred($rules, $this->required);
     }
 }

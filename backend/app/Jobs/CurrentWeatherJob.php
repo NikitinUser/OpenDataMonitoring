@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Dto\CoordinateItemDto;
+use App\Services\Features\Interfaces\CurrentTempInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -15,7 +16,7 @@ class CurrentWeatherJob implements ShouldQueue
      */
     public function __construct(
         public readonly CoordinateItemDto $dto,
-        private $featureService,
+        private CurrentTempInterface $featureService,
     ) {
     }
 

@@ -2,10 +2,9 @@
 
 namespace App\Rules;
 
-use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
+use App\Rules\BaseRule;
 
-class FloatFromMinToMaxRule implements ValidationRule
+class FloatFromMinToMaxRule extends BaseRule
 {
     public function __construct(
         protected float $min,
@@ -13,15 +12,6 @@ class FloatFromMinToMaxRule implements ValidationRule
         protected int $precision = 6,
         protected bool $required = false,
     ) {
-    }
-
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
     }
 
     public function rules(): array
@@ -33,10 +23,6 @@ class FloatFromMinToMaxRule implements ValidationRule
             'max:' . $this->max,
         ];
 
-        if ($this->required) {
-            $rules[] = 'required';
-        }
-
-        return $rules;
+        return $this->requred($rules, $this->required);
     }
 }
